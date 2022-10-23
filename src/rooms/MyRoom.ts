@@ -6,40 +6,40 @@ import { Body } from 'arcade-physics/lib/physics/arcade/Body';
 const FPS = 60;
 const CAT_WIDTH = 100;
 const CAT_HEIGHT = 200;
-const CAT_SPEED = 100;
+const CAT_SPEED = 200;
 
 export class MyRoom extends Room<MyRoomState> {
 
-  physics: ArcadePhysics = null;
-  tick: number = 0;
-  bodies: Record<string, Body> = {};
+	physics: ArcadePhysics = null;
+	tick: number = 0;
+	bodies: Record<string, Body> = {};
 
-  onCreate(options: any) {
-    this.setState(new MyRoomState());
+  	onCreate(options: any) {
+    	this.setState(new MyRoomState());
 
-    this.onMessage("input", (client, { up, left, down, right }) => {
-      const body = this.bodies[client.sessionId];
+		this.onMessage("input", (client, { up, left, down, right }) => {
+			const body = this.bodies[client.sessionId];
 
-      if (up) {
-        body.setVelocityY(-CAT_SPEED);
-      }
-      else if (down) {
-        body.setVelocityY(CAT_SPEED);
-      }
-      else {
-        body.setVelocityY(0);
-      }
+			if (up) {
+				body.setVelocityY(-CAT_SPEED);
+			}
+			else if (down) {
+				body.setVelocityY(CAT_SPEED);
+			}
+			else {
+				body.setVelocityY(0);
+			}
 
-      if (left) {
-        body.setVelocityX(-CAT_SPEED);
-      }
-      else if (right) {
-        body.setVelocityX(CAT_SPEED);
-      }
-      else {
-        body.setVelocityX(0);
-      }
-    });
+			if (left) {
+				body.setVelocityX(-CAT_SPEED);
+			}
+			else if (right) {
+				body.setVelocityX(CAT_SPEED);
+			}
+			else {
+				body.setVelocityX(0);
+			}
+    	});
 
     // Initialize the room's physics
     const config = {
@@ -48,13 +48,13 @@ export class MyRoom extends Room<MyRoomState> {
           config: {}
         },
         settings: {
-          physics: {
-            debug: true,
-            gravity: {
-              x: 0,
-              y: 0
-            }
-          }
+          	physics: {
+            	debug: true,
+				gravity: {
+					x: 0,
+					y: 0
+            	}
+          	}
         },
         scale: {
           width: 2400 * 2,
@@ -79,10 +79,10 @@ export class MyRoom extends Room<MyRoomState> {
   syncState() {
     // Loop over all the players in the room, and sync their X/Ys with that of their physics body
     this.state.players.forEach((player, sessionId) => {
-      const body = this.bodies[sessionId];
+      	const body = this.bodies[sessionId];
 
-      player.x = body.x;
-      player.y = body.y;
+      	player.x = body.x;
+      	player.y = body.y;
     });
   }
 
