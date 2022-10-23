@@ -6,8 +6,12 @@ This project has been created using [⚔️ `create-colyseus-app`](https://githu
 
 ## :crossed_swords: Usage
 
+Same as before
 ```
-npm start
+npm install
+```
+```
+npm run start
 ```
 
 ## Structure
