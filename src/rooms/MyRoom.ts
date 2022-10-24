@@ -43,6 +43,8 @@ export class MyRoom extends Room<MyRoomState> {
 			}
 
       		if(attack){
+				//let zone = 
+				//this.physics.add.overlap()
 				//TODO cram a hitbox in here and make it do somethin
       		}
     	});
