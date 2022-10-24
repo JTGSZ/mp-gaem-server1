@@ -43,6 +43,9 @@ export class MyRoom extends Room<MyRoomState> {
 			}
 
       		if(attack){
+				let attackbody = this.physics.add.body(body.x, body.y, 64, 64)
+				attackbody.enable = true
+				//this.physics.overlap()
 				//let zone = 
 				//this.physics.add.overlap()
 				//TODO cram a hitbox in here and make it do somethin
