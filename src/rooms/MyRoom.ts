@@ -14,10 +14,10 @@ export class MyRoom extends Room<MyRoomState> {
 	tick: number = 0;
 	bodies: Record<string, Body> = {};
 	collisiongroup: Array<Body> = []
+	collisiongroup_attacks: Array<Body> = []
 
   	onCreate(options: any) {
     	this.setState(new MyRoomState());
-		this.collisiongroup = []
 
 		this.onMessage("input", (client, { up, left, down, right, attack }) => {
 			const body = this.bodies[client.sessionId];
@@ -45,6 +45,7 @@ export class MyRoom extends Room<MyRoomState> {
       		if(attack){
 				let attackbody = this.physics.add.body(body.x, body.y, 64, 64)
 				attackbody.enable = true
+    			this.physics.add.overlap(attackbody, this.collisiongroup, this.attack_collision);
 				//this.physics.overlap()
 				//let zone = 
 				//this.physics.add.overlap()
@@ -80,7 +81,9 @@ export class MyRoom extends Room<MyRoomState> {
 
     	this.setSimulationInterval((deltaTime) => this.update(deltaTime));
   	}
-
+	attack_collision(attackbody: Body, target_body: Body){
+		//Here is where you'd do some attack shit i guess cause the processcallback sends in the source and thing that got collided with
+	}
 	update(deltaTime: number) {
 		this.physics.world.update(this.tick * 1000, 1000 / FPS);
 		this.tick++;
