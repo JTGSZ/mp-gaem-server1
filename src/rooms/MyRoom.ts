@@ -2,6 +2,7 @@ import { Room, Client } from "colyseus";
 import { MyRoomState, Player } from "./schema/MyRoomState";
 import { ArcadePhysics } from "arcade-physics";
 import { Body } from 'arcade-physics/lib/physics/arcade/Body';
+import Game_Body from "../extended_shit/extended_arcade_body";
 
 const FPS = 60;
 const CAT_WIDTH = 32;
@@ -107,6 +108,7 @@ export class MyRoom extends Room<MyRoomState> {
 		// When a player joins the room, assign them both a state representation and a physics body
 		this.state.players.set(client.sessionId, new Player(0, 0));
 		let body = this.physics.add.body(0, 0, CAT_WIDTH, CAT_HEIGHT);
+		
 		this.bodies[client.sessionId] = body
 		this.collisiongroup.push(body)
 		
