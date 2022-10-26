@@ -112,7 +112,7 @@ export class MyRoom extends Room<MyRoomState> {
 
 		// When a player joins the room, assign them both a state representation and a physics body
 		this.state.players.set(client.sessionId, new Player(0, 0));
-		let body = new Game_Body(0, 0, CAT_WIDTH, CAT_HEIGHT)
+		let body = new Game_Body(this.physics.world, 0, 0, CAT_WIDTH, CAT_HEIGHT)
 		body.client_id = client.sessionId
 
 		this.physics.world.add(body)
