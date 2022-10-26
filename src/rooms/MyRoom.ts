@@ -14,8 +14,11 @@ export class MyRoom extends Room<MyRoomState> {
 	physics: ArcadePhysics = null;
 	tick: number = 0;
 	bodies: Record<string, Body> = {};
+
 	collisiongroup: Array<Body> = []
 	collisiongroup_attacks: Array<Body> = []
+
+	tempdata: any //lol
 
   	onCreate(options: any) {
     	this.setState(new MyRoomState());
@@ -46,11 +49,12 @@ export class MyRoom extends Room<MyRoomState> {
       		if(attack){
 				let attackbody = this.physics.add.body(body.x, body.y, 64, 64)
 				attackbody.enable = true
-    			this.physics.add.overlap(attackbody, this.collisiongroup, this.attack_collision);
-				//this.physics.overlap()
-				//let zone = 
-				//this.physics.add.overlap()
-				//TODO cram a hitbox in here and make it do somethin
+    			var overlap = this.physics.add.overlap(attackbody, this.collisiongroup, this.attack_collision);
+				overlap.destroy()
+				//We have the session ID on all of the game bodies, so basically here
+				//We'd check the client sessionID to make sure they don't get damaged from their own attack
+				//Then on the body that does receive it if it passes that check we decrease their health
+				//And we keep all of this synced lol
       		}
     	});
 
@@ -83,6 +87,7 @@ export class MyRoom extends Room<MyRoomState> {
     	this.setSimulationInterval((deltaTime) => this.update(deltaTime));
   	}
 	attack_collision(attackbody: Body, target_body: Body){
+
 		//Here is where you'd do some attack shit i guess cause the processcallback sends in the source and thing that got collided with
 	}
 	update(deltaTime: number) {
@@ -107,8 +112,12 @@ export class MyRoom extends Room<MyRoomState> {
 
 		// When a player joins the room, assign them both a state representation and a physics body
 		this.state.players.set(client.sessionId, new Player(0, 0));
-		let body = this.physics.add.body(0, 0, CAT_WIDTH, CAT_HEIGHT);
-		
+		let body = new Game_Body(0, 0, CAT_WIDTH, CAT_HEIGHT)
+		body.client_id = client.sessionId
+
+		this.physics.world.add(body)
+		//let body = this.physics.add.body(0, 0, CAT_WIDTH, CAT_HEIGHT);
+
 		this.bodies[client.sessionId] = body
 		this.collisiongroup.push(body)
 		
